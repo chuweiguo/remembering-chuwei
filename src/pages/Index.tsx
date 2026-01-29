@@ -42,8 +42,6 @@ const Index = () => {
             
             <p>{t('bio.early')}</p>
             
-            <p>{t('bio.career')}</p>
-            
             <p>{t('bio.hobbies')}</p>
             
             <p className="text-foreground">{t('bio.character')}</p>
