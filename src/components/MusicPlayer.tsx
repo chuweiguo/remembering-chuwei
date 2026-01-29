@@ -25,9 +25,17 @@ export function MusicPlayer() {
   const [isReady, setIsReady] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [currentSong, setCurrentSong] = useState('');
-  const [showInitialInfo, setShowInitialInfo] = useState(true);
+  const [showInitialInfo, setShowInitialInfo] = useState(false);
   const [showSignInHint, setShowSignInHint] = useState(false);
   const signInHintTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Check localStorage on mount to see if user has seen info before
+  const hasSeenInfoBefore = useRef(
+    typeof window !== 'undefined' && localStorage.getItem('music-player-seen-info') === 'true'
+  );
+  const hasSeenSignInHintBefore = useRef(
+    typeof window !== 'undefined' && localStorage.getItem('music-player-seen-signin') === 'true'
+  );
 
   const updateCurrentSong = () => {
     if (playerRef.current?.getVideoData) {
@@ -38,11 +46,13 @@ export function MusicPlayer() {
     }
   };
 
-  // Hide initial info box after 3 seconds
+  // Show initial info box only if user hasn't seen it before, then hide after 3 seconds
   useEffect(() => {
-    if (isReady) {
+    if (isReady && !hasSeenInfoBefore.current) {
+      setShowInitialInfo(true);
       const timer = setTimeout(() => {
         setShowInitialInfo(false);
+        localStorage.setItem('music-player-seen-info', 'true');
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -132,14 +142,15 @@ export function MusicPlayer() {
       setHasStartedPlaying(true);
       setIsPaused(false);
       
-      // Show sign-in hint for first-time play (auto-dismiss after 8 seconds)
-      if (!hasStartedPlaying) {
+      // Show sign-in hint for first-time play only if user hasn't seen it before
+      if (!hasStartedPlaying && !hasSeenSignInHintBefore.current) {
         setShowSignInHint(true);
         if (signInHintTimerRef.current) {
           clearTimeout(signInHintTimerRef.current);
         }
         signInHintTimerRef.current = setTimeout(() => {
           setShowSignInHint(false);
+          localStorage.setItem('music-player-seen-signin', 'true');
         }, 8000);
       }
     }
@@ -147,6 +158,7 @@ export function MusicPlayer() {
 
   const dismissSignInHint = () => {
     setShowSignInHint(false);
+    localStorage.setItem('music-player-seen-signin', 'true');
     if (signInHintTimerRef.current) {
       clearTimeout(signInHintTimerRef.current);
     }
@@ -169,11 +181,7 @@ export function MusicPlayer() {
 
       {/* Floating Music Controls */}
       {isReady && (
-        <div 
-          className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fade-in"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fade-in">
           {/* Sign In Hint - shows when user first clicks play */}
           {showSignInHint && (
             <div className="bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-memorial-gold/50 max-w-xs animate-fade-in">
@@ -206,7 +214,7 @@ export function MusicPlayer() {
             </div>
           )}
 
-          {/* Info Box - shows on page load (fades after 3s) OR on hover - positioned above buttons */}
+          {/* Info Box - shows on page load (fades after 3s) OR on hover play button */}
           <div className={`bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs transition-all duration-300 ${showInitialInfo || isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
             <p className="font-medium text-sm text-foreground">{t('home.music.title')}</p>
             <p className="text-xs text-muted-foreground mt-1">{t('home.music.description')}</p>
@@ -250,11 +258,13 @@ export function MusicPlayer() {
               </Tooltip>
             </div>
 
-            {/* Play/Pause Button */}
+            {/* Play/Pause Button - hover trigger is only on this button */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   onClick={togglePlayPause}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
                   className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
                   aria-label={showPlayButton ? t('music.play') : t('music.pause')}
                 >
