@@ -31,12 +31,8 @@ const translations: Record<string, Record<Language, string>> = {
     zh: '郭楚惟，25岁，于2026年1月20日在美国科罗拉多州布雷肯里奇离世，离世时挚友陪伴在侧。' 
   },
   'bio.early': { 
-    en: 'Chuwei was born on August 7, 2000, in Nanjing, China, to Ms. Chen and Mr. Guo. He moved to Bellevue, Washington in 2013, where he attended Tyee Middle School and later Newport High School. At Newport, he served as the Vice President of Programming in the Newport Robotics Group. After graduating in 2018, he went on to study computer science at NYU, where he founded NYU UltraViolet, a robotics club which now has over 100 members. He graduated in 2022 and moved to Atlanta, Georgia to begin working at a robotics startup, Mujin. In 2025, he moved to Berkeley, California and joined another robotics startup, Ambi Robotics.', 
-    zh: '楚惟于2000年8月7日出生于中国南京，父母为陈女士与郭先生。2013年，他随家人移居美国华盛顿州贝尔维尤市，就读于 Tyee 中学，后进入 Newport 高中。在 Newport 高中期间，他曾担任 Newport 机器人社团副社长。2018年高中毕业后，楚惟前往纽约大学攻读计算机科学专业，并创立了 NYU UltraViolet 机器人社团，该社团如今已发展成为拥有百余名成员的学生组织。2022年毕业后，他移居美国亚特兰大，加入机器人初创公司 Mujin，从事机器人相关工程工作。2025年，他迁居加州伯克利，加入机器人初创公司 Ambi Robotics。' 
-  },
-  'bio.career': { 
-    en: 'In both companies, he served as an engineer in robotics, an area he found his passion when he was very young.', 
-    zh: '在上述两家公司中，楚惟均以机器人工程师的身份工作。机器人是他自幼便热爱的领域，也是他一生倾注热情的事业所在。' 
+    en: 'Chuwei was born on August 7, 2000, in Nanjing, China, to Ms. Chen and Mr. Guo. He moved to Bellevue, Washington in 2013, where he attended Tyee Middle School and later Newport High School. At Newport, he served as the Vice President of Programming in the Newport Robotics Group. After graduating in 2018, he went on to study computer science at NYU, where he founded NYU UltraViolet, a robotics club which now has over 100 members. He graduated in 2022 and moved to Atlanta, Georgia to begin working at a robotics startup, Mujin. In 2025, he moved to Berkeley, California and joined another robotics startup, Ambi Robotics. In both companies, he served as an engineer in robotics, an area he found his passion when he was very young.', 
+    zh: '楚惟于2000年8月7日出生于中国南京，父母为陈女士与郭先生。2013年，他随家人移居美国华盛顿州贝尔维尤市，就读于 Tyee 中学，后进入 Newport 高中。在 Newport 高中期间，他曾担任 Newport 机器人社团副社长。2018年高中毕业后，楚惟前往纽约大学攻读计算机科学专业，并创立了 NYU UltraViolet 机器人社团，该社团如今已发展成为拥有百余名成员的学生组织。2022年毕业后，他移居美国亚特兰大，加入机器人初创公司 Mujin，从事机器人相关工程工作。2025年，他迁居加州伯克利，加入机器人初创公司 Ambi Robotics。在上述两家公司中，楚惟均以机器人工程师的身份工作。机器人是他自幼便热爱的领域，也是他一生倾注热情的事业所在。' 
   },
   'bio.hobbies': { 
     en: 'Apart from robotics, Chuwei loved computers as well. Many of his families\' and friends\' computers were personally built by him. Working on cars was another passion of Chuwei\'s. He did an extensive amount of modification to his beloved Mustang S550. He also loved playing video and board games, sharing many unforgettable moments of joy with his friends over many years.', 
