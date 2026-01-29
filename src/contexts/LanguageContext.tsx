@@ -78,6 +78,7 @@ const translations: Record<string, Record<Language, string>> = {
   'music.skip': { en: 'Next song', zh: '下一首' },
   'music.mute': { en: 'Mute', zh: '静音' },
   'music.unmute': { en: 'Unmute', zh: '取消静音' },
+  'music.openPlaylist': { en: 'Open full playlist', zh: '打开完整播放列表' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
