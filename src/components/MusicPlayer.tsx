@@ -154,9 +154,6 @@ export function MusicPlayer() {
           {/* Info Box - shows on page load (fades after 3s) OR on hover */}
           <div className={`bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs transition-all duration-300 ${showInitialInfo || isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
             <p className="font-medium text-sm text-foreground">{t('home.music.title')}</p>
-            {currentSong && (
-              <p className="text-xs text-foreground mt-1 font-medium">{currentSong}</p>
-            )}
             <p className="text-xs text-muted-foreground mt-1">{t('home.music.description')}</p>
             <button 
               onClick={(e) => {
@@ -170,6 +167,13 @@ export function MusicPlayer() {
               <ExternalLink className="w-3 h-3" />
             </button>
           </div>
+
+          {/* Current Song Name - shows on hover only */}
+          {currentSong && (
+            <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-sm transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
+              <p className="text-xs text-foreground font-medium whitespace-nowrap">{currentSong}</p>
+            </div>
+          )}
 
           {/* Skip Button - only visible on hover */}
           <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'}`}>
