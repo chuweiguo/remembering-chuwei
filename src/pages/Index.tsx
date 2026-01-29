@@ -1,5 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Layout } from '@/components/Layout';
+import { YouTubePlayer } from '@/components/YouTubePlayer';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -66,15 +67,7 @@ const Index = () => {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             {t('home.music.description')}
           </p>
-          <div className="aspect-video bg-card rounded-lg border border-border overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV"
-              title="Chuwei's Playlist"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          <YouTubePlayer playlistId="PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV" />
         </div>
       </section>
     </Layout>
