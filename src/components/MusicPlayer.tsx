@@ -181,7 +181,10 @@ export function MusicPlayer() {
 
       {/* Floating Music Controls */}
       {isReady && (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fade-in">
+        <div 
+          className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fade-in"
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {/* Sign In Hint - shows when user first clicks play */}
           {showSignInHint && (
             <div className="bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-memorial-gold/50 max-w-xs animate-fade-in">
@@ -258,13 +261,12 @@ export function MusicPlayer() {
               </Tooltip>
             </div>
 
-            {/* Play/Pause Button - hover trigger is only on this button */}
+            {/* Play/Pause Button - mouseEnter here activates hover, mouseLeave on container deactivates */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   onClick={togglePlayPause}
                   onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
                   className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
                   aria-label={showPlayButton ? t('music.play') : t('music.pause')}
                 >
