@@ -133,8 +133,8 @@ export function MusicPlayer() {
         >
           {/* Current Song Name */}
           {currentSong && (
-            <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-48 transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
-              <p className="text-xs text-foreground truncate font-medium">{currentSong}</p>
+            <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-sm transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
+              <p className="text-xs text-foreground font-medium whitespace-nowrap">{currentSong}</p>
             </div>
           )}
 
