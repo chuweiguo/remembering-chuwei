@@ -28,31 +28,31 @@ const translations: Record<string, Record<Language, string>> = {
   // Biography sections
   'bio.intro': { 
     en: 'Chuwei Guo, 25, left us on January 20, 2026, with his friends by his side at Breckenridge, Colorado.', 
-    zh: '郭楚惟，25岁，于2026年1月20日在科罗拉多州布雷肯里奇与朋友们在一起时离开了我们。' 
+    zh: '郭楚惟，25岁，于2026年1月20日在美国科罗拉多州布雷肯里奇离世，离世时挚友陪伴在侧。' 
   },
   'bio.early': { 
     en: 'Chuwei was born on August 7, 2000, in Nanjing, China, to Ms. Chen and Mr. Guo. He moved to Bellevue, Washington in 2013, where he attended Tyee Middle School and later Newport High School. At Newport, he served as the Vice President of Programming in the Newport Robotics Group. After graduating in 2018, he went on to study computer science at NYU, where he founded NYU UltraViolet, a robotics club which now has over 100 members. He graduated in 2022 and moved to Atlanta, Georgia to begin working at a robotics startup, Mujin. In 2025, he moved to Berkeley, California and joined another robotics startup, Ambi Robotics.', 
-    zh: '楚惟于2000年8月7日出生在中国南京，父母是陈女士和郭先生。2013年，他移居到华盛顿州贝尔维尤，先后就读于Tyee中学和Newport高中。在Newport高中，他担任Newport机器人小组的编程副主席。2018年毕业后，他前往纽约大学攻读计算机科学，并在那里创立了NYU UltraViolet机器人俱乐部，该俱乐部现在已有超过100名成员。2022年毕业后，他搬到佐治亚州亚特兰大，开始在机器人初创公司Mujin工作。2025年，他搬到加利福尼亚州伯克利，加入了另一家机器人初创公司Ambi Robotics。' 
+    zh: '楚惟于2000年8月7日出生于中国南京，父母为陈女士与郭先生。2013年，他随家人移居美国华盛顿州贝尔维尤市，就读于 Tyee 中学，后进入 Newport 高中。在 Newport 高中期间，他曾担任 Newport 机器人社团副社长。2018年高中毕业后，楚惟前往纽约大学攻读计算机科学专业，并创立了 NYU UltraViolet 机器人社团，该社团如今已发展成为拥有百余名成员的学生组织。2022年毕业后，他移居美国亚特兰大，加入机器人初创公司 Mujin，从事机器人相关工程工作。2025年，他迁居加州伯克利，加入机器人初创公司 Ambi Robotics。' 
   },
   'bio.career': { 
     en: 'In both companies, he served as an engineer in robotics, an area he found his passion when he was very young.', 
-    zh: '在这两家公司，他都担任机器人工程师——这是他从小就发现自己热爱的领域。' 
+    zh: '在上述两家公司中，楚惟均以机器人工程师的身份工作。机器人是他自幼便热爱的领域，也是他一生倾注热情的事业所在。' 
   },
   'bio.hobbies': { 
     en: 'Apart from robotics, Chuwei loved computers as well. Many of his families\' and friends\' computers were personally built by him. Working on cars was another passion of Chuwei\'s. He did an extensive amount of modification to his beloved Mustang S550. He also loved playing video and board games, sharing many unforgettable moments of joy with his friends over many years.', 
-    zh: '除了机器人，楚惟也热爱电脑。他的许多家人和朋友的电脑都是他亲手组装的。改装汽车是楚惟的另一个爱好。他对他心爱的Mustang S550进行了大量改装。他还喜欢玩电子游戏和桌游，多年来与朋友们分享了许多难忘的欢乐时光。' 
+    zh: '除机器人之外，楚惟十分热爱计算机。许多亲友所使用的电脑，皆由他亲手组装与维护。汽车亦是他的重要兴趣之一，他曾对自己心爱的 Mustang S550 进行了大量改装。此外，他还热衷于电子游戏与桌游，多年来与朋友们共同留下了许多珍贵而难忘的欢乐回忆。' 
   },
   'bio.character': { 
     en: 'Chuwei was loved by everyone. He was kind, caring, and full of love for life and others. He is a light to his parents and friends.', 
-    zh: '楚惟深受每个人的喜爱。他善良、体贴，对生活和他人充满热爱。他是父母和朋友心中的一道光。' 
+    zh: '楚惟为人谦和善良，真诚体贴，深受亲友爱戴。他热爱生活，也关怀他人，是父母与朋友心中温暖而明亮的存在。' 
   },
   'bio.wish': { 
     en: 'Chuwei once said in a casual conversation, that his biggest wish in life is to make sure everyone around him is cheerful and well cared of. It was a mission that he carried in his heart, and one he fulfilled every second of his life.', 
-    zh: '楚惟曾在一次闲聊中说过，他人生最大的愿望就是确保身边的每个人都开心、被关怀。这是他心中的使命，也是他生命中每一秒都在践行的使命。' 
+    zh: '楚惟曾在一次轻松的交谈中提到，他一生最大的心愿，是让身边的每一个人都能快乐，并得到妥善的关怀。这份心愿他始终铭记于心，并在生命的每一刻身体力行。' 
   },
   'bio.closing': { 
     en: 'Chuwei has led a beautiful life full of passion and love. His presence changed everyone around him, and he will forever be in the memories of his mom, dad, family, and his friends whom he loved deeply.', 
-    zh: '楚惟度过了充满热情与爱的美好人生。他的存在改变了身边的每一个人，他将永远活在他深爱的父母、家人和朋友们的记忆中。' 
+    zh: '楚惟的一生充满热情与爱。他的存在深深影响了身边的每一个人，他将永远被铭记于母亲、父亲、家人，以及他所深爱、亦深爱着他的朋友们心中。' 
   },
   
   // Timeline page
