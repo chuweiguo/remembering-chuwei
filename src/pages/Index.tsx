@@ -66,10 +66,14 @@ const Index = () => {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             {t('home.music.description')}
           </p>
-          <div className="aspect-video bg-card rounded-lg border border-border flex items-center justify-center">
-            <p className="text-muted-foreground text-sm">
-              YouTube playlist will be embedded here
-            </p>
+          <div className="aspect-video bg-card rounded-lg border border-border overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/videoseries?list=PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV"
+              title="Chuwei's Playlist"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>
