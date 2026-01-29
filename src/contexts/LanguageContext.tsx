@@ -18,7 +18,7 @@ const translations: Record<string, Record<Language, string>> = {
   // Home page
   'home.welcome': { en: 'In Loving Memory', zh: '永远怀念' },
   'home.subtitle': { en: 'August 7, 2000 – January 20, 2026', zh: '2000年8月7日 – 2026年1月20日' },
-  'home.biography.title': { en: 'His Story', zh: '他的故事' },
+  'home.biography.title': { en: 'His Story', zh: '生平纪略' },
   'home.music.title': { en: 'Songs He Loved', zh: '他喜爱的歌曲' },
   'home.music.description': { 
     en: 'Background music is selected directly from Chuwei\'s personal playlist. These are some of his favorite songs, and music that his friends remember him by.', 
