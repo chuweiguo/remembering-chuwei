@@ -58,7 +58,14 @@ export function MusicPlayer() {
             setIsReady(true);
             // Shuffle the playlist
             event.target.setShuffle(true);
-            event.target.playVideo();
+            // Get playlist length and start at random position
+            const playlist = event.target.getPlaylist();
+            if (playlist && playlist.length > 0) {
+              const randomIndex = Math.floor(Math.random() * playlist.length);
+              event.target.playVideoAt(randomIndex);
+            } else {
+              event.target.playVideo();
+            }
           },
           onStateChange: (event: any) => {
             // When playlist ends, restart it
