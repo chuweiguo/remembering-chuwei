@@ -146,15 +146,17 @@ export function MusicPlayer() {
             <TooltipContent side="top" className="max-w-xs">
               <p className="font-medium">{t('home.music.title')}</p>
               <p className="text-xs text-muted-foreground mt-1">{t('home.music.description')}</p>
-              <a 
-                href="https://music.youtube.com/playlist?list=PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs text-memorial-gold hover:underline mt-2"
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open('https://music.youtube.com/playlist?list=PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV', '_blank', 'noopener,noreferrer');
+                }}
+                className="inline-flex items-center gap-1 text-xs text-memorial-gold hover:underline mt-2 cursor-pointer"
               >
                 {t('music.openPlaylist')}
                 <ExternalLink className="w-3 h-3" />
-              </a>
+              </button>
             </TooltipContent>
           </Tooltip>
         </div>
