@@ -22,6 +22,17 @@ export function MusicPlayer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [currentSong, setCurrentSong] = useState('');
+
+  const updateCurrentSong = () => {
+    if (playerRef.current?.getVideoData) {
+      const videoData = playerRef.current.getVideoData();
+      if (videoData?.title) {
+        setCurrentSong(videoData.title);
+      }
+    }
+  };
 
   useEffect(() => {
     // Load YouTube IFrame API
@@ -68,6 +79,10 @@ export function MusicPlayer() {
             }
           },
           onStateChange: (event: any) => {
+            // Update song title when video changes or starts playing
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              updateCurrentSong();
+            }
             // When playlist ends, restart it
             if (event.data === window.YT.PlayerState.ENDED) {
               event.target.playVideo();
@@ -111,22 +126,35 @@ export function MusicPlayer() {
 
       {/* Floating Music Controls */}
       {isReady && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 animate-fade-in">
-          {/* Skip Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={skipToNext}
-                className="p-3 rounded-full bg-memorial-earth/80 text-white shadow-lg hover:bg-memorial-earth transition-all duration-300 hover:scale-110"
-                aria-label={t('music.skip')}
-              >
-                <SkipForward className="w-5 h-5" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>{t('music.skip')}</p>
-            </TooltipContent>
-          </Tooltip>
+        <div 
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 animate-fade-in"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Current Song Name */}
+          {currentSong && (
+            <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-48 transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
+              <p className="text-xs text-foreground truncate font-medium">{currentSong}</p>
+            </div>
+          )}
+
+          {/* Skip Button - only visible on hover */}
+          <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'}`}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={skipToNext}
+                  className="p-3 rounded-full bg-memorial-earth/80 text-white shadow-lg hover:bg-memorial-earth transition-all duration-300 hover:scale-110"
+                  aria-label={t('music.skip')}
+                >
+                  <SkipForward className="w-5 h-5" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>{t('music.skip')}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
 
           {/* Mute/Unmute Button with Tooltip */}
           <Tooltip>
