@@ -8,11 +8,9 @@ declare global {
   }
 }
 
-interface YouTubePlayerProps {
-  playlistId: string;
-}
+const PLAYLIST_ID = 'PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV';
 
-export function YouTubePlayer({ playlistId }: YouTubePlayerProps) {
+export function MusicPlayer() {
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMuted, setIsMuted] = useState(true);
@@ -37,15 +35,15 @@ export function YouTubePlayer({ playlistId }: YouTubePlayerProps) {
       if (playerRef.current) return;
       
       playerRef.current = new window.YT.Player(containerRef.current, {
-        height: '100%',
-        width: '100%',
+        height: '0',
+        width: '0',
         playerVars: {
           listType: 'playlist',
-          list: playlistId,
+          list: PLAYLIST_ID,
           autoplay: 1,
           mute: 1,
           loop: 1,
-          controls: 1,
+          controls: 0,
           rel: 0,
         },
         events: {
@@ -71,7 +69,7 @@ export function YouTubePlayer({ playlistId }: YouTubePlayerProps) {
         playerRef.current = null;
       }
     };
-  }, [playlistId]);
+  }, []);
 
   const toggleMute = () => {
     if (!playerRef.current) return;
@@ -87,9 +85,9 @@ export function YouTubePlayer({ playlistId }: YouTubePlayerProps) {
 
   return (
     <>
-      {/* YouTube Player */}
-      <div className="aspect-video bg-card rounded-lg border border-border overflow-hidden">
-        <div ref={containerRef} className="w-full h-full" />
+      {/* Hidden YouTube Player */}
+      <div className="hidden">
+        <div ref={containerRef} />
       </div>
 
       {/* Floating Mute/Unmute Button */}

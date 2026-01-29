@@ -24,6 +24,10 @@ const translations: Record<string, Record<Language, string>> = {
     en: 'Background music is selected directly from Chuwei\'s personal playlist. These are some of his favorite songs, and music that his friends remember him by.', 
     zh: '背景音乐直接选自楚惟的个人播放列表。这些是他最喜欢的歌曲，也是朋友们怀念他时会想起的音乐。' 
   },
+  'home.music.hint': {
+    en: 'Click the speaker icon to listen',
+    zh: '点击扬声器图标收听'
+  },
   
   // Biography sections
   'bio.intro': { 

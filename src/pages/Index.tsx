@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Layout } from '@/components/Layout';
-import { YouTubePlayer } from '@/components/YouTubePlayer';
+import { Music } from 'lucide-react';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -64,10 +64,15 @@ const Index = () => {
           <h2 className="font-display text-3xl md:text-4xl font-semibold text-center mb-4 text-foreground">
             {t('home.music.title')}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
             {t('home.music.description')}
           </p>
-          <YouTubePlayer playlistId="PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV" />
+          <div className="flex items-center justify-center gap-3 text-memorial-gold">
+            <Music className="w-6 h-6" />
+            <p className="text-lg font-medium">
+              {t('home.music.hint')}
+            </p>
+          </div>
         </div>
       </section>
     </Layout>
