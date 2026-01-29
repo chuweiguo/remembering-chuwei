@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Music } from 'lucide-react';
+
 
 const Index = () => {
   const { t } = useLanguage();
@@ -52,24 +52,6 @@ const Index = () => {
             
             <p className="text-foreground font-medium text-center pt-4">
               {t('bio.closing')}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Music Section */}
-      <section className="py-16 md:py-24 bg-memorial-cream/50">
-        <div className="container max-w-4xl">
-          <h2 className="font-display text-3xl md:text-4xl font-semibold text-center mb-4 text-foreground">
-            {t('home.music.title')}
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
-            {t('home.music.description')}
-          </p>
-          <div className="flex items-center justify-center gap-3 text-memorial-gold">
-            <Music className="w-6 h-6" />
-            <p className="text-lg font-medium">
-              {t('home.music.hint')}
             </p>
           </div>
         </div>

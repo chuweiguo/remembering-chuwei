@@ -73,6 +73,11 @@ const translations: Record<string, Record<Language, string>> = {
   // Common
   'common.loading': { en: 'Loading...', zh: '加载中...' },
   'common.name': { en: 'Chuwei Guo', zh: '郭楚惟' },
+  
+  // Music controls
+  'music.skip': { en: 'Next song', zh: '下一首' },
+  'music.mute': { en: 'Mute', zh: '静音' },
+  'music.unmute': { en: 'Unmute', zh: '取消静音' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

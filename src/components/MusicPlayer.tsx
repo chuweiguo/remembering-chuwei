@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, SkipForward } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 declare global {
   interface Window {
@@ -11,6 +17,7 @@ declare global {
 const PLAYLIST_ID = 'PL3YtK8tDoOLzg7lHZ9SNtH60xDqqGvkTV';
 
 export function MusicPlayer() {
+  const { t } = useLanguage();
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMuted, setIsMuted] = useState(true);
@@ -83,6 +90,11 @@ export function MusicPlayer() {
     setIsMuted(!isMuted);
   };
 
+  const skipToNext = () => {
+    if (!playerRef.current) return;
+    playerRef.current.nextVideo();
+  };
+
   return (
     <>
       {/* Hidden YouTube Player */}
@@ -90,19 +102,46 @@ export function MusicPlayer() {
         <div ref={containerRef} />
       </div>
 
-      {/* Floating Mute/Unmute Button */}
+      {/* Floating Music Controls */}
       {isReady && (
-        <button
-          onClick={toggleMute}
-          className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110 animate-fade-in"
-          aria-label={isMuted ? 'Unmute music' : 'Mute music'}
-        >
-          {isMuted ? (
-            <VolumeX className="w-6 h-6" />
-          ) : (
-            <Volume2 className="w-6 h-6" />
-          )}
-        </button>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 animate-fade-in">
+          {/* Skip Button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={skipToNext}
+                className="p-3 rounded-full bg-memorial-earth/80 text-white shadow-lg hover:bg-memorial-earth transition-all duration-300 hover:scale-110"
+                aria-label={t('music.skip')}
+              >
+                <SkipForward className="w-5 h-5" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>{t('music.skip')}</p>
+            </TooltipContent>
+          </Tooltip>
+
+          {/* Mute/Unmute Button with Tooltip */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={toggleMute}
+                className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
+                aria-label={isMuted ? t('music.unmute') : t('music.mute')}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-6 h-6" />
+                ) : (
+                  <Volume2 className="w-6 h-6" />
+                )}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-xs">
+              <p className="font-medium">{t('home.music.title')}</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('home.music.description')}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       )}
     </>
   );
