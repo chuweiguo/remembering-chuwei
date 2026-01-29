@@ -80,6 +80,10 @@ const translations: Record<string, Record<Language, string>> = {
   'music.pause': { en: 'Pause', zh: '暂停' },
   'music.clickToPlay': { en: 'Click to play music', zh: '点击播放音乐' },
   'music.openPlaylist': { en: 'Open full playlist', zh: '打开完整播放列表' },
+  'music.signInRequired': { en: 'Sign in to YouTube Music', zh: '请登录 YouTube Music' },
+  'music.signInDescription': { en: 'To hear the music, please sign in to YouTube Music in your browser.', zh: '若要收听音乐，请在浏览器中登录 YouTube Music。' },
+  'music.signIn': { en: 'Sign in', zh: '登录' },
+  'music.dismiss': { en: 'Dismiss', zh: '关闭' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

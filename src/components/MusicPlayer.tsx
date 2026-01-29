@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Play, Pause, SkipForward, ExternalLink } from 'lucide-react';
+import { Play, Pause, SkipForward, ExternalLink, LogIn } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
   Tooltip,
@@ -20,12 +20,15 @@ export function MusicPlayer() {
   const { t } = useLanguage();
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [hasStartedPlaying, setHasStartedPlaying] = useState(false); // Track if user has started audio
-  const [isPaused, setIsPaused] = useState(false); // Track if user paused
+  const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [currentSong, setCurrentSong] = useState('');
   const [showInitialInfo, setShowInitialInfo] = useState(true);
+  const [showSignInPrompt, setShowSignInPrompt] = useState(false);
+  const playbackCheckRef = useRef<NodeJS.Timeout | null>(null);
+  const lastTimeRef = useRef<number>(0);
 
   const updateCurrentSong = () => {
     if (playerRef.current?.getVideoData) {
@@ -34,6 +37,28 @@ export function MusicPlayer() {
         setCurrentSong(videoData.title);
       }
     }
+  };
+
+  // Check if playback is actually progressing after unmute
+  const checkPlaybackProgress = () => {
+    if (playbackCheckRef.current) {
+      clearTimeout(playbackCheckRef.current);
+    }
+    
+    lastTimeRef.current = playerRef.current?.getCurrentTime?.() || 0;
+    
+    playbackCheckRef.current = setTimeout(() => {
+      if (playerRef.current) {
+        const currentTime = playerRef.current.getCurrentTime?.() || 0;
+        const playerState = playerRef.current.getPlayerState?.();
+        
+        // If player says it's playing but time hasn't progressed, user might not be signed in
+        if (playerState === window.YT?.PlayerState?.PLAYING && 
+            Math.abs(currentTime - lastTimeRef.current) < 0.5) {
+          setShowSignInPrompt(true);
+        }
+      }
+    }, 2000); // Check after 2 seconds
   };
 
   // Hide initial info box after 3 seconds
@@ -105,6 +130,9 @@ export function MusicPlayer() {
     }
 
     return () => {
+      if (playbackCheckRef.current) {
+        clearTimeout(playbackCheckRef.current);
+      }
       if (playerRef.current?.destroy) {
         playerRef.current.destroy();
         playerRef.current = null;
@@ -126,7 +154,15 @@ export function MusicPlayer() {
       playerRef.current.playVideo();
       setHasStartedPlaying(true);
       setIsPaused(false);
+      setShowSignInPrompt(false);
+      
+      // Check if playback actually works after unmuting
+      checkPlaybackProgress();
     }
+  };
+
+  const dismissSignInPrompt = () => {
+    setShowSignInPrompt(false);
   };
 
   const skipToNext = () => {
@@ -151,6 +187,38 @@ export function MusicPlayer() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
+          {/* Sign In Prompt - shows when playback fails */}
+          {showSignInPrompt && (
+            <div className="bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-memorial-gold/50 max-w-xs animate-fade-in">
+              <div className="flex items-start gap-2">
+                <LogIn className="w-4 h-4 text-memorial-gold mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm text-foreground">{t('music.signInRequired')}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{t('music.signInDescription')}</p>
+                  <div className="flex gap-2 mt-2">
+                    <button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        window.open('https://music.youtube.com', '_blank', 'noopener,noreferrer');
+                      }}
+                      className="inline-flex items-center gap-1 text-xs bg-memorial-gold text-white px-2 py-1 rounded hover:bg-memorial-gold/90 transition-colors"
+                    >
+                      {t('music.signIn')}
+                      <ExternalLink className="w-3 h-3" />
+                    </button>
+                    <button 
+                      onClick={dismissSignInPrompt}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {t('music.dismiss')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Info Box - shows on page load (fades after 3s) OR on hover - positioned above buttons */}
           <div className={`bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs transition-all duration-300 ${showInitialInfo || isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
             <p className="font-medium text-sm text-foreground">{t('home.music.title')}</p>
