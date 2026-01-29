@@ -147,12 +147,12 @@ export function MusicPlayer() {
       {/* Floating Music Controls */}
       {isReady && (
         <div 
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 animate-fade-in"
+          className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fade-in"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Info Box - shows on page load (fades after 3s) OR on hover */}
-          <div className={`bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs transition-all duration-300 ${showInitialInfo || isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
+          {/* Info Box - shows on page load (fades after 3s) OR on hover - positioned above buttons */}
+          <div className={`bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs transition-all duration-300 ${showInitialInfo || isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
             <p className="font-medium text-sm text-foreground">{t('home.music.title')}</p>
             <p className="text-xs text-muted-foreground mt-1">{t('home.music.description')}</p>
             <button 
@@ -168,50 +168,53 @@ export function MusicPlayer() {
             </button>
           </div>
 
-          {/* Current Song Name - shows on hover only */}
-          {currentSong && (
-            <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-sm transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
-              <p className="text-xs text-foreground font-medium whitespace-nowrap">{currentSong}</p>
-            </div>
-          )}
+          {/* Bottom row: Song name, Skip, Play/Pause */}
+          <div className="flex items-center gap-2">
+            {/* Current Song Name - shows on hover only */}
+            {currentSong && (
+              <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-sm transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
+                <p className="text-xs text-foreground font-medium whitespace-nowrap">{currentSong}</p>
+              </div>
+            )}
 
-          {/* Skip Button - only visible on hover */}
-          <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'}`}>
+            {/* Skip Button - only visible on hover */}
+            <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'}`}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={skipToNext}
+                    className="p-3 rounded-full bg-memorial-earth/80 text-white shadow-lg hover:bg-memorial-earth transition-all duration-300 hover:scale-110"
+                    aria-label={t('music.skip')}
+                  >
+                    <SkipForward className="w-5 h-5" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>{t('music.skip')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+
+            {/* Play/Pause Button */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  onClick={skipToNext}
-                  className="p-3 rounded-full bg-memorial-earth/80 text-white shadow-lg hover:bg-memorial-earth transition-all duration-300 hover:scale-110"
-                  aria-label={t('music.skip')}
+                  onClick={togglePlayPause}
+                  className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
+                  aria-label={showPlayButton ? t('music.play') : t('music.pause')}
                 >
-                  <SkipForward className="w-5 h-5" />
+                  {showPlayButton ? (
+                    <Play className="w-6 h-6" />
+                  ) : (
+                    <Pause className="w-6 h-6" />
+                  )}
                 </button>
               </TooltipTrigger>
               <TooltipContent side="top">
-                <p>{t('music.skip')}</p>
+                <p>{showPlayButton ? t('music.play') : t('music.pause')}</p>
               </TooltipContent>
             </Tooltip>
           </div>
-
-          {/* Play/Pause Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={togglePlayPause}
-                className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
-                aria-label={showPlayButton ? t('music.play') : t('music.pause')}
-              >
-                {showPlayButton ? (
-                  <Play className="w-6 h-6" />
-                ) : (
-                  <Pause className="w-6 h-6" />
-                )}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>{showPlayButton ? t('music.play') : t('music.pause')}</p>
-            </TooltipContent>
-          </Tooltip>
         </div>
       )}
     </>
