@@ -76,8 +76,9 @@ const translations: Record<string, Record<Language, string>> = {
   
   // Music controls
   'music.skip': { en: 'Next song', zh: '下一首' },
-  'music.mute': { en: 'Mute', zh: '静音' },
-  'music.unmute': { en: 'Unmute', zh: '取消静音' },
+  'music.play': { en: 'Play', zh: '播放' },
+  'music.pause': { en: 'Pause', zh: '暂停' },
+  'music.clickToPlay': { en: 'Click to play music', zh: '点击播放音乐' },
   'music.openPlaylist': { en: 'Open full playlist', zh: '打开完整播放列表' },
 };
 
