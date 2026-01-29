@@ -1,11 +1,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Layout } from '@/components/Layout';
 
 const Tributes = () => {
   const { t } = useLanguage();
 
   return (
-    <Layout>
+    <>
       {/* Header */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
@@ -53,7 +52,7 @@ const Tributes = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

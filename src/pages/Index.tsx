@@ -1,12 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Layout } from '@/components/Layout';
 import { Music } from 'lucide-react';
 
 const Index = () => {
   const { t } = useLanguage();
 
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-memorial-cream to-background" />
@@ -75,7 +74,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 
