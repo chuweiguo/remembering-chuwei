@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX, SkipForward, ExternalLink } from 'lucide-react';
+import { Play, Pause, SkipForward, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
   Tooltip,
@@ -20,10 +20,11 @@ export function MusicPlayer() {
   const { t } = useLanguage();
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [currentSong, setCurrentSong] = useState('');
+  const [showInitialInfo, setShowInitialInfo] = useState(true);
 
   const updateCurrentSong = () => {
     if (playerRef.current?.getVideoData) {
@@ -33,6 +34,16 @@ export function MusicPlayer() {
       }
     }
   };
+
+  // Hide initial info box after 3 seconds
+  useEffect(() => {
+    if (isReady) {
+      const timer = setTimeout(() => {
+        setShowInitialInfo(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isReady]);
 
   useEffect(() => {
     // Load YouTube IFrame API
@@ -79,9 +90,12 @@ export function MusicPlayer() {
             }
           },
           onStateChange: (event: any) => {
-            // Update song title when video changes or starts playing
+            // Update playing state and song title
             if (event.data === window.YT.PlayerState.PLAYING) {
+              setIsPlaying(true);
               updateCurrentSong();
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
+              setIsPlaying(false);
             }
             // When playlist ends, restart it
             if (event.data === window.YT.PlayerState.ENDED) {
@@ -100,16 +114,16 @@ export function MusicPlayer() {
     };
   }, []);
 
-  const toggleMute = () => {
+  const togglePlayPause = () => {
     if (!playerRef.current) return;
     
-    if (isMuted) {
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
       playerRef.current.unMute();
       playerRef.current.setVolume(50);
-    } else {
-      playerRef.current.mute();
+      playerRef.current.playVideo();
     }
-    setIsMuted(!isMuted);
   };
 
   const skipToNext = () => {
@@ -131,8 +145,16 @@ export function MusicPlayer() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Current Song Name */}
-          {currentSong && (
+          {/* Initial Info Box - shows on page load, fades after 3s */}
+          {showInitialInfo && !isHovered && (
+            <div className="bg-card/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-border max-w-xs animate-fade-in transition-opacity duration-500">
+              <p className="font-medium text-sm text-foreground">{t('home.music.title')}</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('music.clickToPlay')}</p>
+            </div>
+          )}
+
+          {/* Current Song Name - shows on hover */}
+          {currentSong && !showInitialInfo && (
             <div className={`bg-card/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border max-w-sm transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}>
               <p className="text-xs text-foreground font-medium whitespace-nowrap">{currentSong}</p>
             </div>
@@ -156,18 +178,18 @@ export function MusicPlayer() {
             </Tooltip>
           </div>
 
-          {/* Mute/Unmute Button with Tooltip */}
+          {/* Play/Pause Button with Tooltip */}
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                onClick={toggleMute}
+                onClick={togglePlayPause}
                 className="p-4 rounded-full bg-memorial-gold text-white shadow-lg hover:bg-memorial-gold/90 transition-all duration-300 hover:scale-110"
-                aria-label={isMuted ? t('music.unmute') : t('music.mute')}
+                aria-label={isPlaying ? t('music.pause') : t('music.play')}
               >
-                {isMuted ? (
-                  <VolumeX className="w-6 h-6" />
+                {isPlaying ? (
+                  <Pause className="w-6 h-6" />
                 ) : (
-                  <Volume2 className="w-6 h-6" />
+                  <Play className="w-6 h-6" />
                 )}
               </button>
             </TooltipTrigger>
