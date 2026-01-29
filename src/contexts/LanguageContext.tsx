@@ -17,7 +17,7 @@ const translations: Record<string, Record<Language, string>> = {
   
   // Home page
   'home.welcome': { en: 'In Loving Memory', zh: '永远怀念' },
-  'home.subtitle': { en: 'August 7, 2000 – January 20, 2025', zh: '2000年8月7日 – 2025年1月20日' },
+  'home.subtitle': { en: 'August 7, 2000 – January 20, 2026', zh: '2000年8月7日 – 2026年1月20日' },
   'home.biography.title': { en: 'His Story', zh: '他的故事' },
   'home.music.title': { en: 'Songs He Loved', zh: '他喜爱的歌曲' },
   'home.music.description': { 
@@ -27,8 +27,8 @@ const translations: Record<string, Record<Language, string>> = {
   
   // Biography sections
   'bio.intro': { 
-    en: 'Chuwei Guo, 25, left us on January 20, 2025, with his friends by his side at Breckenridge, Colorado.', 
-    zh: '郭楚惟，25岁，于2025年1月20日在科罗拉多州布雷肯里奇与朋友们在一起时离开了我们。' 
+    en: 'Chuwei Guo, 25, left us on January 20, 2026, with his friends by his side at Breckenridge, Colorado.', 
+    zh: '郭楚惟，25岁，于2026年1月20日在科罗拉多州布雷肯里奇与朋友们在一起时离开了我们。' 
   },
   'bio.early': { 
     en: 'Chuwei was born on August 7, 2000, in Nanjing, China, to Ms. Chen and Mr. Guo. He moved to Bellevue, Washington in 2013, where he attended Tyee Middle School and later Newport High School. At Newport, he served as the Vice President of Programming in the Newport Robotics Group. After graduating in 2018, he went on to study computer science at NYU, where he founded NYU UltraViolet, a robotics club which now has over 100 members. He graduated in 2022 and moved to Atlanta, Georgia to begin working at a robotics startup, Mujin. In 2025, he moved to Berkeley, California and joined another robotics startup, Ambi Robotics.', 
