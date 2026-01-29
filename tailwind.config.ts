@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Noto Sans', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Noto Serif SC', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +51,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Memorial-specific colors
+        memorial: {
+          gold: "hsl(var(--memorial-gold))",
+          cream: "hsl(var(--memorial-cream))",
+          earth: "hsl(var(--memorial-earth))",
+          sage: "hsl(var(--memorial-sage))",
+          "warm-gray": "hsl(var(--memorial-warm-gray))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -80,10 +92,21 @@ export default {
             height: "0",
           },
         },
+        "fade-in-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
       },
     },
   },
