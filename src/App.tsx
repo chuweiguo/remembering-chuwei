@@ -11,6 +11,7 @@ import Gallery from "./pages/Gallery";
 import Tributes from "./pages/Tributes";
 import NotFound from "./pages/NotFound";
 
+// Initialize React Query client
 const queryClient = new QueryClient();
 
 const App = () => (
