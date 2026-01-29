@@ -1,5 +1,4 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Layout } from '@/components/Layout';
 
 // Placeholder timeline data - will be replaced with real content
 const timelineEvents = [
@@ -30,7 +29,7 @@ const Timeline = () => {
   const { language, t } = useLanguage();
 
   return (
-    <Layout>
+    <>
       {/* Header */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
@@ -101,7 +100,7 @@ const Timeline = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 
