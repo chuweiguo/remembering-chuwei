@@ -13,9 +13,10 @@ interface Tribute {
 
 interface TributesListProps {
   sheetUrl?: string;
+  refreshTrigger?: number;
 }
 
-const TributesList = ({ sheetUrl }: TributesListProps) => {
+const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
   const { t, language } = useLanguage();
   const [tributes, setTributes] = useState<Tribute[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +65,7 @@ const TributesList = ({ sheetUrl }: TributesListProps) => {
 
   useEffect(() => {
     fetchTributes();
-  }, [sheetUrl]);
+  }, [sheetUrl, refreshTrigger]);
 
   const formatDate = (timestamp: string) => {
     if (!timestamp) return '';
