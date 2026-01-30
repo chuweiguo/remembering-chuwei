@@ -70,6 +70,33 @@ const translations: Record<string, Record<Language, string>> = {
   'tributes.form.title': { en: 'Leave a Message', zh: '留言' },
   'tributes.messages.title': { en: 'Messages from Friends & Family', zh: '亲友留言' },
   
+  // Tribute form
+  'tributes.form.name': { en: 'Your Name', zh: '您的姓名' },
+  'tributes.form.name.placeholder': { en: 'Enter your name', zh: '请输入姓名' },
+  'tributes.form.relationship': { en: 'Relationship to Chuwei', zh: '与楚惟的关系' },
+  'tributes.form.relationship.placeholder': { en: 'Select relationship', zh: '请选择关系' },
+  'tributes.form.relationship.family': { en: 'Family', zh: '家人' },
+  'tributes.form.relationship.friend': { en: 'Friend', zh: '朋友' },
+  'tributes.form.relationship.classmate': { en: 'Classmate', zh: '同学' },
+  'tributes.form.relationship.colleague': { en: 'Colleague', zh: '同事' },
+  'tributes.form.relationship.other': { en: 'Other', zh: '其他' },
+  'tributes.form.message': { en: 'Your Message', zh: '您的留言' },
+  'tributes.form.message.placeholder': { en: 'Share your memory or message...', zh: '分享您的回忆或留言...' },
+  'tributes.form.submit': { en: 'Submit Tribute', zh: '提交留言' },
+  'tributes.form.submitting': { en: 'Submitting...', zh: '提交中...' },
+  'tributes.form.success': { en: 'Thank you for your tribute. It will appear shortly.', zh: '感谢您的留言，稍后将会显示。' },
+  'tributes.form.error.required': { en: 'Please fill in your name and message.', zh: '请填写姓名和留言。' },
+  'tributes.form.error.submit': { en: 'Failed to submit. Please try again.', zh: '提交失败，请重试。' },
+  'tributes.form.error.notConfigured': { en: 'Tribute submission is not yet configured.', zh: '留言提交尚未配置。' },
+  'tributes.form.configureHint': { en: 'Google Apps Script URL not configured yet.', zh: 'Google Apps Script URL 尚未配置。' },
+  
+  // Tribute messages
+  'tributes.messages.empty': { en: 'No tributes yet. Be the first to share a message.', zh: '暂无留言，成为第一个留言者。' },
+  'tributes.messages.error': { en: 'Failed to load tributes.', zh: '加载留言失败。' },
+  'tributes.messages.retry': { en: 'Try Again', zh: '重试' },
+  'tributes.messages.refresh': { en: 'Refresh', zh: '刷新' },
+  'tributes.messages.configureHint': { en: 'Connect a Google Sheet to display tributes.', zh: '连接 Google Sheet 以显示留言。' },
+  
   // Common
   'common.loading': { en: 'Loading...', zh: '加载中...' },
   'common.name': { en: 'Chuwei Guo', zh: '郭楚惟' },
