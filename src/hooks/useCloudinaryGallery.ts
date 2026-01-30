@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface CloudinaryResource {
   public_id: string;
@@ -21,16 +21,13 @@ export function useCloudinaryGallery({
   folder,
   batchSize = 12 
 }: UseCloudinaryGalleryOptions) {
-  // Store photos as batches to prevent CSS columns reflow
-  const [photoBatches, setPhotoBatches] = useState<CloudinaryResource[][]>([]);
+  const [photos, setPhotos] = useState<CloudinaryResource[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
-  
-  // Use ref to store all resources to avoid dependency issues
-  const allResourcesRef = useRef<CloudinaryResource[]>([]);
+  const [allResources, setAllResources] = useState<CloudinaryResource[]>([]);
 
   const fetchPhotos = useCallback(async (cursor?: string | null) => {
     try {
@@ -63,23 +60,26 @@ export function useCloudinaryGallery({
           format: r.format,
         }));
 
-        // Store the order from API (random on each refresh) in ref
-        allResourcesRef.current = resources;
+        // Sort by public_id to ensure consistent ordering
+        const sortedResources = [...resources].sort((a, b) => 
+          a.public_id.localeCompare(b.public_id)
+        );
+
+        setAllResources(sortedResources);
         
-        const batch = resources.slice(0, batchSize);
-        setPhotoBatches([batch]);
-        setHasMore(batchSize < resources.length);
-        setNextCursor(batchSize < resources.length ? batchSize.toString() : null);
+        const batch = sortedResources.slice(0, batchSize);
+        setPhotos(batch);
+        setHasMore(batchSize < sortedResources.length);
+        setNextCursor(batchSize < sortedResources.length ? batchSize.toString() : null);
       } else {
         // Client-side pagination for subsequent loads
         const startIndex = parseInt(cursor, 10);
         const endIndex = startIndex + batchSize;
-        const batch = allResourcesRef.current.slice(startIndex, endIndex);
+        const batch = allResources.slice(startIndex, endIndex);
         
-        // Append new batch without modifying existing batches
-        setPhotoBatches(prev => [...prev, batch]);
-        setHasMore(endIndex < allResourcesRef.current.length);
-        setNextCursor(endIndex < allResourcesRef.current.length ? endIndex.toString() : null);
+        setPhotos(prev => [...prev, ...batch]);
+        setHasMore(endIndex < allResources.length);
+        setNextCursor(endIndex < allResources.length ? endIndex.toString() : null);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load photos');
@@ -87,7 +87,7 @@ export function useCloudinaryGallery({
       setLoading(false);
       setLoadingMore(false);
     }
-  }, [cloudName, tag, folder, batchSize]);
+  }, [cloudName, tag, folder, batchSize, allResources]);
 
   useEffect(() => {
     fetchPhotos();
@@ -100,19 +100,15 @@ export function useCloudinaryGallery({
   }, [loadingMore, hasMore, nextCursor, fetchPhotos]);
 
   const refresh = useCallback(() => {
-    setPhotoBatches([]);
-    allResourcesRef.current = [];
+    setPhotos([]);
+    setAllResources([]);
     setNextCursor(null);
     setHasMore(true);
     fetchPhotos();
-  }, [fetchPhotos]);
-
-  // Flatten batches for components that need flat array (like lightbox)
-  const photos = photoBatches.flat();
+  }, []);
 
   return {
     photos,
-    photoBatches,
     loading,
     loadingMore,
     error,

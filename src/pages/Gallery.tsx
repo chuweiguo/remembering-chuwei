@@ -19,7 +19,6 @@ const Gallery = () => {
 
   const {
     photos,
-    photoBatches,
     loading,
     loadingMore,
     error,
@@ -51,14 +50,8 @@ const Gallery = () => {
     return () => observer.disconnect();
   }, [hasMore, loadingMore, loadMore]);
 
-  // Calculate global index for lightbox from batch position
-  const openLightbox = (batchIndex: number, photoIndexInBatch: number) => {
-    let globalIndex = 0;
-    for (let i = 0; i < batchIndex; i++) {
-      globalIndex += photoBatches[i].length;
-    }
-    globalIndex += photoIndexInBatch;
-    setCurrentPhotoIndex(globalIndex);
+  const openLightbox = (index: number) => {
+    setCurrentPhotoIndex(index);
     setLightboxOpen(true);
   };
 
@@ -106,28 +99,22 @@ const Gallery = () => {
             </div>
           ) : photos.length > 0 ? (
             <>
-              {/* Render each batch in its own container to prevent reflow */}
-              {photoBatches.map((batch, batchIndex) => (
-                <div 
-                  key={`batch-${batchIndex}`} 
-                  className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 mb-4"
-                >
-                  {batch.map((photo, photoIndex) => (
-                    <div
-                      key={photo.public_id}
-                      className="break-inside-avoid cursor-pointer group"
-                      onClick={() => openLightbox(batchIndex, photoIndex)}
-                    >
-                      <img
-                        src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_400,q_auto,f_auto/${photo.public_id}.${photo.format}`}
-                        alt=""
-                        className="w-full rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-[1.02]"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))}
+              <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                {photos.map((photo, index) => (
+                  <div
+                    key={photo.public_id}
+                    className="break-inside-avoid cursor-pointer group"
+                    onClick={() => openLightbox(index)}
+                  >
+                    <img
+                      src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_400,q_auto,f_auto/${photo.public_id}.${photo.format}`}
+                      alt=""
+                      className="w-full rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
 
               {/* Load more trigger */}
               <div ref={loadMoreRef} className="flex justify-center py-8">
