@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const CLOUDINARY_CLOUD_NAME = 'dt0xeaftq';
-const CLOUDINARY_FOLDER = 'home/chuwei-gallery';
+const CLOUDINARY_FOLDER = 'Home/chuwei-gallery';
 
 const Gallery = () => {
   const { t } = useLanguage();
