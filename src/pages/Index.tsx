@@ -1,5 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
+const chuweiHero = '/images/chuwei-hero.jpg';
+
 
 const Index = () => {
   const { t } = useLanguage();
@@ -22,9 +24,9 @@ const Index = () => {
             </p>
           </div>
           
-          {/* Placeholder for hero photo */}
-          <div className="mt-6 mx-auto w-40 h-40 md:w-52 md:h-52 rounded-full bg-memorial-sage/30 border-4 border-memorial-gold/30 flex items-center justify-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <span className="text-muted-foreground text-sm">Photo</span>
+          {/* Hero photo */}
+          <div className="mt-6 mx-auto w-40 h-40 md:w-52 md:h-52 rounded-full border-4 border-memorial-gold/30 overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <img src={chuweiHero} alt="Chuwei Guo" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
