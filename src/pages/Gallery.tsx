@@ -1,10 +1,57 @@
+import { useState, useEffect, useRef } from 'react';
+import { Loader2, RefreshCw, ImageOff } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCloudinaryGallery } from '@/hooks/useCloudinaryGallery';
+import { PhotoLightbox } from '@/components/PhotoLightbox';
+import { PhotoUploadDialog } from '@/components/PhotoUploadDialog';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
-// Placeholder - will be replaced with Cloudinary URLs
-const photos: string[] = [];
+const CLOUDINARY_CLOUD_NAME = 'dt0xeaftq';
+const CLOUDINARY_FOLDER = 'chuwei-gallery';
 
 const Gallery = () => {
   const { t } = useLanguage();
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  const {
+    photos,
+    loading,
+    loadingMore,
+    error,
+    hasMore,
+    loadMore,
+    refresh,
+  } = useCloudinaryGallery({
+    cloudName: CLOUDINARY_CLOUD_NAME,
+    folder: CLOUDINARY_FOLDER,
+    batchSize: 12,
+  });
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, loadingMore, loadMore]);
+
+  const openLightbox = (index: number) => {
+    setCurrentPhotoIndex(index);
+    setLightboxOpen(true);
+  };
 
   return (
     <>
@@ -14,32 +61,72 @@ const Gallery = () => {
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 animate-fade-in-up">
             {t('gallery.title')}
           </h1>
-          <p className="text-lg text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg text-muted-foreground animate-fade-in-up mb-6" style={{ animationDelay: '0.1s' }}>
             {t('gallery.subtitle')}
           </p>
+          <div className="flex justify-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <PhotoUploadDialog />
+            <Button variant="ghost" size="icon" onClick={refresh} disabled={loading}>
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Gallery Grid */}
       <section className="py-16">
         <div className="container">
-          {photos.length > 0 ? (
+          {loading && photos.length === 0 ? (
             <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-              {photos.map((photo, index) => (
-                <div
-                  key={index}
-                  className="break-inside-avoid animate-fade-in-up"
-                  style={{ animationDelay: `${(index % 8) * 0.05}s` }}
-                >
-                  <img
-                    src={photo}
-                    alt=""
-                    className="w-full rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                    loading="lazy"
-                  />
-                </div>
+              {[...Array(8)].map((_, i) => (
+                <Skeleton 
+                  key={i} 
+                  className="break-inside-avoid rounded-lg"
+                  style={{ height: `${200 + Math.random() * 150}px` }}
+                />
               ))}
             </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <ImageOff className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <Button variant="outline" onClick={refresh}>
+                <RefreshCw className="h-4 w-4 mr-2" />
+                {t('tributes.messages.retry')}
+              </Button>
+            </div>
+          ) : photos.length > 0 ? (
+            <>
+              <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                {photos.map((photo, index) => (
+                  <div
+                    key={photo.public_id}
+                    className="break-inside-avoid animate-fade-in-up cursor-pointer group"
+                    style={{ animationDelay: `${(index % 8) * 0.05}s` }}
+                    onClick={() => openLightbox(index)}
+                  >
+                    <img
+                      src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_400,q_auto,f_auto/${CLOUDINARY_FOLDER}/${photo.public_id}.${photo.format}`}
+                      alt=""
+                      className="w-full rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Load more trigger */}
+              <div ref={loadMoreRef} className="flex justify-center py-8">
+                {loadingMore && (
+                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                )}
+                {!hasMore && photos.length > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    {t('gallery.noMore')}
+                  </p>
+                )}
+              </div>
+            </>
           ) : (
             <div className="text-center py-20">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
@@ -53,12 +140,21 @@ const Gallery = () => {
                 ))}
               </div>
               <p className="text-muted-foreground max-w-md mx-auto">
-                {t('gallery.placeholder')}
+                {t('gallery.empty')}
               </p>
             </div>
           )}
         </div>
       </section>
+
+      {/* Lightbox */}
+      <PhotoLightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        photos={photos}
+        currentIndex={currentPhotoIndex}
+        onNavigate={setCurrentPhotoIndex}
+      />
     </>
   );
 };
