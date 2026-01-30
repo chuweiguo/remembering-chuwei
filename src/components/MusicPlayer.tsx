@@ -28,6 +28,7 @@ export function MusicPlayer() {
   const [showInitialInfo, setShowInitialInfo] = useState(false);
   const [showSignInHint, setShowSignInHint] = useState(false);
   const signInHintTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const signInCheckTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Check localStorage on mount to see if user has seen info before
   const hasSeenInfoBefore = useRef(
@@ -120,6 +121,9 @@ export function MusicPlayer() {
       if (signInHintTimerRef.current) {
         clearTimeout(signInHintTimerRef.current);
       }
+      if (signInCheckTimerRef.current) {
+        clearTimeout(signInCheckTimerRef.current);
+      }
       if (playerRef.current?.destroy) {
         playerRef.current.destroy();
         playerRef.current = null;
@@ -142,16 +146,30 @@ export function MusicPlayer() {
       setHasStartedPlaying(true);
       setIsPaused(false);
       
-      // Show sign-in hint for first-time play only if user hasn't seen it before
-      if (!hasStartedPlaying && !hasSeenSignInHintBefore.current) {
-        setShowSignInHint(true);
-        if (signInHintTimerRef.current) {
-          clearTimeout(signInHintTimerRef.current);
+      // Check if song title appears after a delay - if not, user likely not signed in
+      if (!hasStartedPlaying) {
+        if (signInCheckTimerRef.current) {
+          clearTimeout(signInCheckTimerRef.current);
         }
-        signInHintTimerRef.current = setTimeout(() => {
-          setShowSignInHint(false);
-          localStorage.setItem('music-player-seen-signin', 'true');
-        }, 8000);
+        signInCheckTimerRef.current = setTimeout(() => {
+          // Check if we have a song title - if not, user is not signed in
+          const videoData = playerRef.current?.getVideoData?.();
+          if (!videoData?.title && !hasSeenSignInHintBefore.current) {
+            // No song title = not signed in, show hint and reset to pause
+            setShowSignInHint(true);
+            setIsPaused(true);
+            setHasStartedPlaying(false);
+            playerRef.current?.pauseVideo?.();
+            
+            if (signInHintTimerRef.current) {
+              clearTimeout(signInHintTimerRef.current);
+            }
+            signInHintTimerRef.current = setTimeout(() => {
+              setShowSignInHint(false);
+              localStorage.setItem('music-player-seen-signin', 'true');
+            }, 8000);
+          }
+        }, 2000); // Give 2 seconds for song data to load
       }
     }
   };
