@@ -62,6 +62,24 @@ const translations: Record<string, Record<Language, string>> = {
   // Gallery page
   'gallery.title': { en: 'Photo Gallery', zh: '相册' },
   'gallery.subtitle': { en: 'Treasured memories captured in time', zh: '定格的珍贵记忆' },
+  'gallery.empty': { en: 'No photos yet. Be the first to share a memory.', zh: '暂无照片，成为第一个分享回忆的人。' },
+  'gallery.noMore': { en: 'You\'ve seen all photos', zh: '已显示全部照片' },
+  
+  // Gallery upload
+  'gallery.upload.button': { en: 'Share a Photo', zh: '分享照片' },
+  'gallery.upload.title': { en: 'Share a Photo', zh: '分享照片' },
+  'gallery.upload.description': { en: 'Upload a photo of Chuwei. It will be reviewed before appearing in the gallery.', zh: '上传楚惟的照片。审核后将显示在相册中。' },
+  'gallery.upload.yourName': { en: 'Your Name (optional)', zh: '您的姓名（可选）' },
+  'gallery.upload.yourNamePlaceholder': { en: 'Enter your name', zh: '请输入姓名' },
+  'gallery.upload.dropzone': { en: 'Click to select an image', zh: '点击选择图片' },
+  'gallery.upload.cancel': { en: 'Cancel', zh: '取消' },
+  'gallery.upload.submit': { en: 'Upload', zh: '上传' },
+  'gallery.upload.uploading': { en: 'Uploading...', zh: '上传中...' },
+  'gallery.upload.success': { en: 'Photo uploaded!', zh: '照片已上传！' },
+  'gallery.upload.successDescription': { en: 'Thank you for sharing. Your photo will appear after review.', zh: '感谢分享，照片将在审核后显示。' },
+  'gallery.upload.error': { en: 'Upload failed. Please try again.', zh: '上传失败，请重试。' },
+  'gallery.upload.errorSize': { en: 'File is too large. Maximum size is 10MB.', zh: '文件过大，最大允许10MB。' },
+  'gallery.upload.errorType': { en: 'Please select an image file.', zh: '请选择图片文件。' },
   'gallery.placeholder': { en: 'Photos will be added here. Upload your photos to Cloudinary and add the URLs to the gallery data file.', zh: '照片将在此处添加。请将照片上传到Cloudinary并将URL添加到相册数据文件中。' },
   
   // Tributes page
