@@ -16,9 +16,10 @@ import { Send, Loader2 } from 'lucide-react';
 
 interface TributeFormProps {
   scriptUrl?: string;
+  onSubmitSuccess?: () => void;
 }
 
-const TributeForm = ({ scriptUrl }: TributeFormProps) => {
+const TributeForm = ({ scriptUrl, onSubmitSuccess }: TributeFormProps) => {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -60,6 +61,11 @@ const TributeForm = ({ scriptUrl }: TributeFormProps) => {
       // With no-cors, we can't read the response, so we assume success
       toast.success(t('tributes.form.success'));
       setFormData({ name: '', relationship: '', message: '' });
+      
+      // Trigger refresh after a short delay to allow Google Sheets to update
+      if (onSubmitSuccess) {
+        setTimeout(onSubmitSuccess, 2000);
+      }
     } catch (error) {
       console.error('Error submitting tribute:', error);
       toast.error(t('tributes.form.error.submit'));

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TributeForm from '@/components/TributeForm';
 import TributesList from '@/components/TributesList';
@@ -7,6 +8,11 @@ const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ
 
 const Tributes = () => {
   const { t } = useLanguage();
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleSubmitSuccess = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
 
   return (
     <>
@@ -29,7 +35,7 @@ const Tributes = () => {
             {t('tributes.form.title')}
           </h2>
           <div className="bg-card rounded-lg border border-border p-8">
-            <TributeForm scriptUrl={GOOGLE_APPS_SCRIPT_URL} />
+            <TributeForm scriptUrl={GOOGLE_APPS_SCRIPT_URL} onSubmitSuccess={handleSubmitSuccess} />
           </div>
         </div>
       </section>
@@ -40,7 +46,7 @@ const Tributes = () => {
           <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
             {t('tributes.messages.title')}
           </h2>
-          <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} />
+          <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} refreshTrigger={refreshTrigger} />
         </div>
       </section>
     </>
