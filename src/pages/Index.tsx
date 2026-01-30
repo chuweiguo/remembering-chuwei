@@ -46,13 +46,9 @@ const Index = () => {
             
             <p>{t('bio.character')}</p>
             
-            <p className="italic border-l-4 border-memorial-gold pl-6 py-2 bg-memorial-cream/30 rounded-r">
-              {t('bio.wish')}
-            </p>
+            <p>{t('bio.wish')}</p>
             
-            <p className="text-foreground font-medium text-center pt-4">
-              {t('bio.closing')}
-            </p>
+            <p>{t('bio.closing')}</p>
           </div>
         </div>
       </section>
