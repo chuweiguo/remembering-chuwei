@@ -172,7 +172,7 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
       <div className="flex justify-between items-center">
         <Button variant="outline" size="sm" onClick={handleSortToggle}>
           <ArrowUpDown className="mr-2 h-4 w-4" />
-          {sortNewestFirst ? t('tributes.messages.sortOldest') : t('tributes.messages.sortNewest')}
+          {sortNewestFirst ? t('tributes.messages.sortNewest') : t('tributes.messages.sortOldest')}
         </Button>
         <Button variant="ghost" size="sm" onClick={fetchTributes}>
           <RefreshCw className="mr-2 h-4 w-4" />
