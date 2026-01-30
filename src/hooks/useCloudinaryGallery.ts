@@ -10,13 +10,15 @@ interface CloudinaryResource {
 
 interface UseCloudinaryGalleryOptions {
   cloudName: string;
+  tag: string;
   folder: string;
   batchSize?: number;
 }
 
 export function useCloudinaryGallery({ 
   cloudName, 
-  folder, 
+  tag,
+  folder,
   batchSize = 12 
 }: UseCloudinaryGalleryOptions) {
   const [photos, setPhotos] = useState<CloudinaryResource[]>([]);
@@ -25,6 +27,7 @@ export function useCloudinaryGallery({
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [allResources, setAllResources] = useState<CloudinaryResource[]>([]);
 
   const fetchPhotos = useCallback(async (cursor?: string | null) => {
     try {
@@ -35,49 +38,55 @@ export function useCloudinaryGallery({
       }
       setError(null);
 
-      // Using Cloudinary's Search API via the client-side endpoint
-      // This requires the folder to have public access
-      const baseUrl = `https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`;
-      
-      const response = await fetch(baseUrl);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch photos');
-      }
+      // Only fetch from API on initial load
+      if (!cursor) {
+        // Using Cloudinary's client-side list endpoint with TAG (not folder)
+        // This requires "Resource list" to be unchecked in Cloudinary Security settings
+        const baseUrl = `https://res.cloudinary.com/${cloudName}/image/list/${tag}.json`;
+        
+        const response = await fetch(baseUrl);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch photos. Make sure the tag exists and Resource List is enabled in Cloudinary settings.');
+        }
 
-      const data = await response.json();
-      const resources: CloudinaryResource[] = (data.resources || []).map((r: any) => ({
-        public_id: r.public_id,
-        secure_url: `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${r.public_id}.${r.format}`,
-        width: r.width,
-        height: r.height,
-        format: r.format,
-      }));
+        const data = await response.json();
+        const resources: CloudinaryResource[] = (data.resources || []).map((r: any) => ({
+          public_id: r.public_id,
+          // Build the full URL using the folder path
+          secure_url: `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${r.public_id}.${r.format}`,
+          width: r.width,
+          height: r.height,
+          format: r.format,
+        }));
 
-      // Client-side pagination since list endpoint doesn't support cursor
-      const startIndex = cursor ? parseInt(cursor, 10) : 0;
-      const endIndex = startIndex + batchSize;
-      const batch = resources.slice(startIndex, endIndex);
-      
-      if (cursor) {
-        setPhotos(prev => [...prev, ...batch]);
-      } else {
+        setAllResources(resources);
+        
+        const batch = resources.slice(0, batchSize);
         setPhotos(batch);
+        setHasMore(batchSize < resources.length);
+        setNextCursor(batchSize < resources.length ? batchSize.toString() : null);
+      } else {
+        // Client-side pagination for subsequent loads
+        const startIndex = parseInt(cursor, 10);
+        const endIndex = startIndex + batchSize;
+        const batch = allResources.slice(startIndex, endIndex);
+        
+        setPhotos(prev => [...prev, ...batch]);
+        setHasMore(endIndex < allResources.length);
+        setNextCursor(endIndex < allResources.length ? endIndex.toString() : null);
       }
-      
-      setHasMore(endIndex < resources.length);
-      setNextCursor(endIndex < resources.length ? endIndex.toString() : null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load photos');
     } finally {
       setLoading(false);
       setLoadingMore(false);
     }
-  }, [cloudName, folder, batchSize]);
+  }, [cloudName, tag, folder, batchSize, allResources]);
 
   useEffect(() => {
     fetchPhotos();
-  }, [fetchPhotos]);
+  }, [cloudName, tag, folder, batchSize]);
 
   const loadMore = useCallback(() => {
     if (!loadingMore && hasMore && nextCursor) {
@@ -87,10 +96,11 @@ export function useCloudinaryGallery({
 
   const refresh = useCallback(() => {
     setPhotos([]);
+    setAllResources([]);
     setNextCursor(null);
     setHasMore(true);
     fetchPhotos();
-  }, [fetchPhotos]);
+  }, []);
 
   return {
     photos,
