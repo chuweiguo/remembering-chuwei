@@ -136,7 +136,8 @@ const translations: Record<string, Record<Language, string>> = {
   // Contact
   'contact.title': { en: 'Contact Creator', zh: '联系创建者' },
   'contact.description': { en: 'Having issues or suggestions? Feel free to reach out.', zh: '有问题或建议？欢迎联系我。' },
-  'contact.email': { en: 'Email', zh: '邮箱' },
+  'contact.method': { en: 'Email', zh: '微信' },
+  'contact.value': { en: 'jerrywuzijie@gmail.com', zh: 'jerrynahaha' },
   'contact.name': { en: 'Created by a friend of Chuwei', zh: '由楚惟的朋友创建' },
 };
 

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Mail, MessageCircleQuestion } from 'lucide-react';
+import { Mail, MessageCircle, MessageCircleQuestion } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,8 +8,6 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { cn } from '@/lib/utils';
-
-const CONTACT_EMAIL = 'haokunz@outlook.com';
 
 export function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -66,13 +64,20 @@ export function Header() {
                 <p className="text-sm text-muted-foreground">
                   {t('contact.description')}
                 </p>
-                <a 
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="flex items-center gap-2 text-sm text-primary hover:underline"
-                >
-                  <Mail className="h-4 w-4" />
-                  {CONTACT_EMAIL}
-                </a>
+                {language === 'en' ? (
+                  <a 
+                    href={`mailto:${t('contact.value')}`}
+                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                  >
+                    <Mail className="h-4 w-4" />
+                    {t('contact.value')}
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-2 text-sm text-primary">
+                    <MessageCircle className="h-4 w-4" />
+                    <span>{t('contact.method')}：{t('contact.value')}</span>
+                  </div>
+                )}
               </div>
             </HoverCardContent>
           </HoverCard>
