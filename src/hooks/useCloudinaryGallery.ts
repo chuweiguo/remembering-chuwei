@@ -53,8 +53,8 @@ export function useCloudinaryGallery({
         const data = await response.json();
         const resources: CloudinaryResource[] = (data.resources || []).map((r: any) => ({
           public_id: r.public_id,
-          // Build the full URL using the folder path
-          secure_url: `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${r.public_id}.${r.format}`,
+          // Build the full URL - the public_id already contains the unique identifier
+          secure_url: `https://res.cloudinary.com/${cloudName}/image/upload/v${r.version}/${r.public_id}.${r.format}`,
           width: r.width,
           height: r.height,
           format: r.format,

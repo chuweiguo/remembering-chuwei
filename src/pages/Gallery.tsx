@@ -108,7 +108,7 @@ const Gallery = () => {
                     onClick={() => openLightbox(index)}
                   >
                     <img
-                      src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_400,q_auto,f_auto/${CLOUDINARY_FOLDER}/${photo.public_id}.${photo.format}`}
+                      src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_400,q_auto,f_auto/${photo.public_id}.${photo.format}`}
                       alt=""
                       className="w-full rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-[1.02]"
                       loading="lazy"
