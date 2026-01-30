@@ -58,7 +58,7 @@ const Gallery = () => {
   return (
     <>
       {/* Header */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-memorial-cream to-background">
+      <section className="py-8 md:py-12 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 animate-fade-in-up">
             {t('gallery.title')}
