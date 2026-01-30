@@ -143,18 +143,24 @@ export function MusicPlayer() {
       playerRef.current.unMute();
       playerRef.current.setVolume(50);
       playerRef.current.playVideo();
+      
+      const isFirstPlay = !hasStartedPlaying;
       setHasStartedPlaying(true);
       setIsPaused(false);
       
       // Check if song title appears after a delay - if not, user likely not signed in
-      if (!hasStartedPlaying) {
+      if (isFirstPlay) {
         if (signInCheckTimerRef.current) {
           clearTimeout(signInCheckTimerRef.current);
         }
         signInCheckTimerRef.current = setTimeout(() => {
           // Check if we have a song title - if not, user is not signed in
           const videoData = playerRef.current?.getVideoData?.();
-          if (!videoData?.title && !hasSeenSignInHintBefore.current) {
+          const hasSongTitle = videoData?.title && videoData.title.length > 0;
+          
+          console.log('Sign-in check:', { hasSongTitle, title: videoData?.title, hasSeenBefore: hasSeenSignInHintBefore.current });
+          
+          if (!hasSongTitle) {
             // No song title = not signed in, show hint and reset to pause
             setShowSignInHint(true);
             setIsPaused(true);
@@ -169,7 +175,7 @@ export function MusicPlayer() {
               localStorage.setItem('music-player-seen-signin', 'true');
             }, 8000);
           }
-        }, 2000); // Give 2 seconds for song data to load
+        }, 2500); // Give 2.5 seconds for song data to load
       }
     }
   };
