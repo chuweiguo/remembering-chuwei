@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const CLOUDINARY_CLOUD_NAME = 'dt0xeaftq';
+const CLOUDINARY_TAG = 'chuwei-gallery';
 const CLOUDINARY_FOLDER = 'Home/chuwei-gallery';
 
 const Gallery = () => {
@@ -26,6 +27,7 @@ const Gallery = () => {
     refresh,
   } = useCloudinaryGallery({
     cloudName: CLOUDINARY_CLOUD_NAME,
+    tag: CLOUDINARY_TAG,
     folder: CLOUDINARY_FOLDER,
     batchSize: 12,
   });
