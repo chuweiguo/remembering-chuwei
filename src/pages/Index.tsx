@@ -1,6 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-
-const chuweiHero = '/images/chuwei-hero.jpg';
+import chuweiHero from '@/assets/chuwei-hero.jpg';
 
 
 const Index = () => {
