@@ -1,26 +1,65 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
-// Placeholder timeline data - will be replaced with real content
+// Timeline events - photos can be added as Cloudinary URLs
 const timelineEvents = [
   {
     id: 1,
-    date: { en: 'Birth Year', zh: '出生年份' },
-    title: { en: 'The Beginning', zh: '生命的开始' },
-    description: { en: 'Chuwei was born...', zh: '楚惟出生...' },
+    date: { en: '2000 - 2013', zh: '2000 - 2013' },
+    title: { en: 'Childhood in China', zh: '中国的童年' },
+    description: { 
+      en: 'Chuwei spent his early childhood years in China, where his curiosity and love for technology first began to bloom.', 
+      zh: '楚惟在中国度过了童年时光，他对科技的好奇心和热爱在这里萌芽。' 
+    },
     photos: [] as string[],
   },
   {
     id: 2,
-    date: { en: 'Childhood', zh: '童年时期' },
-    title: { en: 'Growing Up', zh: '成长岁月' },
-    description: { en: 'Early years and cherished memories...', zh: '童年时光和珍贵回忆...' },
+    date: { en: '2013 - 2014', zh: '2013 - 2014' },
+    title: { en: 'Tyee Middle School', zh: 'Tyee 中学' },
+    description: { 
+      en: 'Chuwei began his education in the United States at Tyee Middle School, adapting to a new culture and language.', 
+      zh: '楚惟在 Tyee 中学开始了他在美国的求学之路，适应新的文化和语言。' 
+    },
     photos: [] as string[],
   },
   {
     id: 3,
-    date: { en: 'Later Years', zh: '后来的日子' },
-    title: { en: 'Journey to America', zh: '来到美国' },
-    description: { en: 'A new chapter begins...', zh: '新的篇章开始...' },
+    date: { en: '2014 - 2018', zh: '2014 - 2018' },
+    title: { en: 'Newport High School', zh: 'Newport 高中' },
+    description: { 
+      en: 'During his high school years at Newport, Chuwei developed his passion for engineering and technology.', 
+      zh: '在 Newport 高中期间，楚惟培养了对工程和技术的热情。' 
+    },
+    photos: [] as string[],
+  },
+  {
+    id: 4,
+    date: { en: '2018 - 2022', zh: '2018 - 2022' },
+    title: { en: 'New York University', zh: '纽约大学' },
+    description: { 
+      en: 'Chuwei pursued his studies at NYU, where he founded NYU UltraViolet and deepened his expertise in robotics.', 
+      zh: '楚惟在纽约大学深造，创立了 NYU UltraViolet 社团，并深化了他在机器人领域的专业知识。' 
+    },
+    photos: [] as string[],
+  },
+  {
+    id: 5,
+    date: { en: '2022 - 2024', zh: '2022 - 2024' },
+    title: { en: 'Mujin', zh: 'Mujin' },
+    description: { 
+      en: 'Chuwei joined Mujin as a robotics engineer, working on cutting-edge automation solutions.', 
+      zh: '楚惟加入 Mujin 担任机器人工程师，从事前沿自动化解决方案的研发。' 
+    },
+    photos: [] as string[],
+  },
+  {
+    id: 6,
+    date: { en: '2025 - 2026', zh: '2025 - 2026' },
+    title: { en: 'Ambi Robotics', zh: 'Ambi Robotics' },
+    description: { 
+      en: 'Chuwei continued his robotics career at Ambi Robotics, contributing to innovative warehouse automation technology.', 
+      zh: '楚惟在 Ambi Robotics 继续他的机器人事业，为创新的仓库自动化技术做出贡献。' 
+    },
     photos: [] as string[],
   },
 ];
