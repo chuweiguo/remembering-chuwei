@@ -24,14 +24,14 @@ const Index = () => {
           </div>
           
           {/* Hero photo */}
-          <div className="mt-6 mx-auto w-40 h-40 md:w-52 md:h-52 rounded-full border-4 border-memorial-gold/30 overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="mt-6 mx-auto w-52 h-52 md:w-72 md:h-72 rounded-full border-4 border-memorial-gold/30 overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <img src={chuweiHero} alt="Chuwei Guo" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
 
       {/* Biography Section */}
-      <section className="py-8 md:py-12">
+      <section className="py-4 md:py-6">
         <div className="container max-w-4xl">
           <h2 className="font-display text-2xl md:text-3xl font-semibold text-center mb-6 text-foreground">
             {t('home.biography.title')}
