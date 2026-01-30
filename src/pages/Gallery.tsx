@@ -103,8 +103,7 @@ const Gallery = () => {
                 {photos.map((photo, index) => (
                   <div
                     key={photo.public_id}
-                    className="break-inside-avoid animate-fade-in-up cursor-pointer group"
-                    style={{ animationDelay: `${(index % 8) * 0.05}s` }}
+                    className="break-inside-avoid cursor-pointer group"
                     onClick={() => openLightbox(index)}
                   >
                     <img

@@ -60,12 +60,17 @@ export function useCloudinaryGallery({
           format: r.format,
         }));
 
-        setAllResources(resources);
+        // Sort by public_id to ensure consistent ordering
+        const sortedResources = [...resources].sort((a, b) => 
+          a.public_id.localeCompare(b.public_id)
+        );
+
+        setAllResources(sortedResources);
         
-        const batch = resources.slice(0, batchSize);
+        const batch = sortedResources.slice(0, batchSize);
         setPhotos(batch);
-        setHasMore(batchSize < resources.length);
-        setNextCursor(batchSize < resources.length ? batchSize.toString() : null);
+        setHasMore(batchSize < sortedResources.length);
+        setNextCursor(batchSize < sortedResources.length ? batchSize.toString() : null);
       } else {
         // Client-side pagination for subsequent loads
         const startIndex = parseInt(cursor, 10);
