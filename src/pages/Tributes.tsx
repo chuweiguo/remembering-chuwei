@@ -1,4 +1,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import TributeForm from '@/components/TributeForm';
+import TributesList from '@/components/TributesList';
+
+// TODO: Replace these with your actual URLs after setting up Google Apps Script and Sheet
+const GOOGLE_APPS_SCRIPT_URL = ''; // Your deployed Apps Script URL
+const GOOGLE_SHEET_CSV_URL = ''; // Your published Google Sheet CSV URL
 
 const Tributes = () => {
   const { t } = useLanguage();
@@ -17,39 +23,25 @@ const Tributes = () => {
         </div>
       </section>
 
-      {/* Leave a Message - Google Form */}
+      {/* Leave a Message - Custom Form */}
       <section className="py-16">
         <div className="container max-w-2xl">
           <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
             {t('tributes.form.title')}
           </h2>
-          <div className="bg-card rounded-lg border border-border p-8 text-center">
-            <p className="text-muted-foreground mb-4">
-              Google Form will be embedded here
-            </p>
-            <p className="text-sm text-memorial-warm-gray">
-              Create a Google Form and paste the embed code here
-            </p>
+          <div className="bg-card rounded-lg border border-border p-8">
+            <TributeForm scriptUrl={GOOGLE_APPS_SCRIPT_URL} />
           </div>
         </div>
       </section>
 
-      {/* Messages Display - Google Sheet */}
+      {/* Messages Display */}
       <section className="py-16 bg-memorial-cream/30">
         <div className="container max-w-4xl">
           <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
             {t('tributes.messages.title')}
           </h2>
-          <div className="bg-card rounded-lg border border-border p-8 text-center min-h-[300px] flex items-center justify-center">
-            <div>
-              <p className="text-muted-foreground mb-4">
-                Messages from the Google Sheet will be displayed here
-              </p>
-              <p className="text-sm text-memorial-warm-gray">
-                Connect your Google Sheet to display submitted tributes
-              </p>
-            </div>
-          </div>
+          <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} />
         </div>
       </section>
     </>
