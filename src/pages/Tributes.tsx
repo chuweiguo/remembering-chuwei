@@ -2,9 +2,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import TributeForm from '@/components/TributeForm';
 import TributesList from '@/components/TributesList';
 
-// TODO: Replace these with your actual URLs after setting up Google Apps Script and Sheet
-const GOOGLE_APPS_SCRIPT_URL = ''; // Your deployed Apps Script URL
-const GOOGLE_SHEET_CSV_URL = ''; // Your published Google Sheet CSV URL
+const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJnUqF2BRgGJalbc7XEM1efP1TkWllPDD1c-DiGkKC6Y4PQl7SjrwRqeO_-xQeCS441g/exec';
+const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQEGRWxVG5gWzbZpQR0rcqh8aodJbxLv1lM6STB5VztT-LXAxKxZ6kgrYKsEuB7Ew9tKzRRjk5yvhgE/pub?output=csv';
 
 const Tributes = () => {
   const { t } = useLanguage();
