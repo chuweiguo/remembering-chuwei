@@ -17,7 +17,7 @@ const Tributes = () => {
   return (
     <>
       {/* Header */}
-      <section className="py-10 md:py-14 bg-gradient-to-b from-memorial-cream to-background">
+      <section className="py-4 md:py-6 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2 animate-fade-in-up">
             {t('tributes.title')}

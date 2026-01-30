@@ -70,19 +70,19 @@ const Timeline = () => {
   return (
     <>
       {/* Header */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-memorial-cream to-background">
+      <section className="py-4 md:py-6 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 animate-fade-in-up">
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2 animate-fade-in-up">
             {t('timeline.title')}
           </h1>
-          <p className="text-lg text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <p className="text-base text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             {t('timeline.subtitle')}
           </p>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-16">
+      <section className="py-6">
         <div className="container max-w-4xl">
           <div className="relative">
             {/* Vertical line */}
