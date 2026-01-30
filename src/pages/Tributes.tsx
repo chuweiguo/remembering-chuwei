@@ -28,8 +28,18 @@ const Tributes = () => {
         </div>
       </section>
 
-      {/* Leave a Message - Custom Form */}
+      {/* Messages Display */}
       <section className="py-16">
+        <div className="container max-w-4xl">
+          <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
+            {t('tributes.messages.title')}
+          </h2>
+          <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} refreshTrigger={refreshTrigger} />
+        </div>
+      </section>
+
+      {/* Leave a Message - Custom Form */}
+      <section className="py-16 bg-memorial-cream/30">
         <div className="container max-w-2xl">
           <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
             {t('tributes.form.title')}
@@ -37,16 +47,6 @@ const Tributes = () => {
           <div className="bg-card rounded-lg border border-border p-8">
             <TributeForm scriptUrl={GOOGLE_APPS_SCRIPT_URL} onSubmitSuccess={handleSubmitSuccess} />
           </div>
-        </div>
-      </section>
-
-      {/* Messages Display */}
-      <section className="py-16 bg-memorial-cream/30">
-        <div className="container max-w-4xl">
-          <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
-            {t('tributes.messages.title')}
-          </h2>
-          <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} refreshTrigger={refreshTrigger} />
         </div>
       </section>
     </>
