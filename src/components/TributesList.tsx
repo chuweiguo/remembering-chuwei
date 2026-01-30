@@ -24,7 +24,7 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortNewestFirst, setSortNewestFirst] = useState(false);
+  const [sortNewestFirst, setSortNewestFirst] = useState(true);
 
   const fetchTributes = async () => {
     if (!sheetUrl) {
@@ -73,9 +73,12 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
 
   const sortedTributes = useMemo(() => {
     const sorted = [...tributes];
-    if (sortNewestFirst) {
-      sorted.reverse();
+    if (!sortNewestFirst) {
+      // Keep original order (oldest first) only when sortNewestFirst is false
+      return sorted;
     }
+    // Reverse to show newest first (default)
+    sorted.reverse();
     return sorted;
   }, [tributes, sortNewestFirst]);
 
