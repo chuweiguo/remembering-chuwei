@@ -17,21 +17,21 @@ const Tributes = () => {
   return (
     <>
       {/* Header */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-memorial-cream to-background">
+      <section className="py-10 md:py-14 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 animate-fade-in-up">
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2 animate-fade-in-up">
             {t('tributes.title')}
           </h1>
-          <p className="text-lg text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <p className="text-base text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             {t('tributes.subtitle')}
           </p>
         </div>
       </section>
 
       {/* Messages Display */}
-      <section className="py-16">
-        <div className="container max-w-4xl">
-          <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
+      <section className="py-8">
+        <div className="container max-w-3xl">
+          <h2 className="font-display text-xl font-semibold text-center mb-4 text-foreground">
             {t('tributes.messages.title')}
           </h2>
           <TributesList sheetUrl={GOOGLE_SHEET_CSV_URL} refreshTrigger={refreshTrigger} />
@@ -39,12 +39,12 @@ const Tributes = () => {
       </section>
 
       {/* Leave a Message - Custom Form */}
-      <section className="py-16 bg-memorial-cream/30">
-        <div className="container max-w-2xl">
-          <h2 className="font-display text-2xl font-semibold text-center mb-8 text-foreground">
+      <section className="py-8 bg-memorial-cream/30">
+        <div className="container max-w-xl">
+          <h2 className="font-display text-xl font-semibold text-center mb-4 text-foreground">
             {t('tributes.form.title')}
           </h2>
-          <div className="bg-card rounded-lg border border-border p-8">
+          <div className="bg-card rounded-lg border border-border p-6">
             <TributeForm scriptUrl={GOOGLE_APPS_SCRIPT_URL} onSubmitSuccess={handleSubmitSuccess} />
           </div>
         </div>

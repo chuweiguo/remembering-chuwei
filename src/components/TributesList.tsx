@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Heart, User, RefreshCw } from 'lucide-react';
+import { Heart, User, RefreshCw, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Tribute {
@@ -16,11 +16,15 @@ interface TributesListProps {
   refreshTrigger?: number;
 }
 
+const ITEMS_PER_PAGE = 3;
+
 const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
   const { t, language } = useLanguage();
   const [tributes, setTributes] = useState<Tribute[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortNewestFirst, setSortNewestFirst] = useState(false);
 
   const fetchTributes = async () => {
     if (!sheetUrl) {
@@ -51,10 +55,10 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
             message: values[3] || '',
           };
         })
-        .filter(tribute => tribute.name && tribute.message)
-        .reverse(); // Show newest first
+        .filter(tribute => tribute.name && tribute.message);
 
       setTributes(parsedTributes);
+      setCurrentPage(1);
     } catch (err) {
       console.error('Error fetching tributes:', err);
       setError(t('tributes.messages.error'));
@@ -66,6 +70,20 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
   useEffect(() => {
     fetchTributes();
   }, [sheetUrl, refreshTrigger]);
+
+  const sortedTributes = useMemo(() => {
+    const sorted = [...tributes];
+    if (sortNewestFirst) {
+      sorted.reverse();
+    }
+    return sorted;
+  }, [tributes, sortNewestFirst]);
+
+  const totalPages = Math.ceil(sortedTributes.length / ITEMS_PER_PAGE);
+  const paginatedTributes = sortedTributes.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   const formatDate = (timestamp: string) => {
     if (!timestamp) return '';
@@ -92,9 +110,14 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
     return relationshipMap[relationship] || relationship;
   };
 
+  const handleSortToggle = () => {
+    setSortNewestFirst(!sortNewestFirst);
+    setCurrentPage(1);
+  };
+
   if (!sheetUrl) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-8">
         <p className="text-muted-foreground">{t('tributes.messages.configureHint')}</p>
       </div>
     );
@@ -102,17 +125,17 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-3">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-card rounded-lg border border-border p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Skeleton className="h-10 w-10 rounded-full" />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-3 w-24" />
+          <div key={i} className="bg-card rounded-lg border border-border p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <div className="space-y-1">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-3 w-20" />
               </div>
             </div>
-            <Skeleton className="h-20 w-full" />
+            <Skeleton className="h-16 w-full" />
           </div>
         ))}
       </div>
@@ -121,9 +144,9 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
 
   if (error) {
     return (
-      <div className="text-center py-12">
-        <p className="text-destructive mb-4">{error}</p>
-        <Button variant="outline" onClick={fetchTributes}>
+      <div className="text-center py-8">
+        <p className="text-destructive mb-3">{error}</p>
+        <Button variant="outline" size="sm" onClick={fetchTributes}>
           <RefreshCw className="mr-2 h-4 w-4" />
           {t('tributes.messages.retry')}
         </Button>
@@ -133,50 +156,83 @@ const TributesList = ({ sheetUrl, refreshTrigger }: TributesListProps) => {
 
   if (tributes.length === 0) {
     return (
-      <div className="text-center py-12">
-        <Heart className="h-12 w-12 text-memorial-gold mx-auto mb-4 opacity-50" />
+      <div className="text-center py-8">
+        <Heart className="h-10 w-10 text-memorial-gold mx-auto mb-3 opacity-50" />
         <p className="text-muted-foreground">{t('tributes.messages.empty')}</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end">
+    <div className="space-y-4">
+      {/* Controls */}
+      <div className="flex justify-between items-center">
+        <Button variant="outline" size="sm" onClick={handleSortToggle}>
+          <ArrowUpDown className="mr-2 h-4 w-4" />
+          {sortNewestFirst ? t('tributes.messages.sortOldest') : t('tributes.messages.sortNewest')}
+        </Button>
         <Button variant="ghost" size="sm" onClick={fetchTributes}>
           <RefreshCw className="mr-2 h-4 w-4" />
           {t('tributes.messages.refresh')}
         </Button>
       </div>
       
-      {tributes.map((tribute, index) => (
-        <div
-          key={index}
-          className="bg-card rounded-lg border border-border p-6 animate-fade-in-up"
-          style={{ animationDelay: `${index * 0.05}s` }}
-        >
-          <div className="flex items-start gap-4 mb-4">
-            <div className="h-10 w-10 rounded-full bg-memorial-gold/20 flex items-center justify-center flex-shrink-0">
-              <User className="h-5 w-5 text-memorial-gold" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-foreground">{tribute.name}</h3>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                {tribute.relationship && (
-                  <>
-                    <span>{getRelationshipLabel(tribute.relationship)}</span>
-                    <span>•</span>
-                  </>
-                )}
-                <span>{formatDate(tribute.timestamp)}</span>
+      {/* Tributes */}
+      <div className="space-y-3">
+        {paginatedTributes.map((tribute, index) => (
+          <div
+            key={`${tribute.timestamp}-${index}`}
+            className="bg-card rounded-lg border border-border p-4 animate-fade-in-up"
+            style={{ animationDelay: `${index * 0.05}s` }}
+          >
+            <div className="flex items-start gap-3 mb-2">
+              <div className="h-8 w-8 rounded-full bg-memorial-gold/20 flex items-center justify-center flex-shrink-0">
+                <User className="h-4 w-4 text-memorial-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium text-foreground text-sm">{tribute.name}</h3>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  {tribute.relationship && (
+                    <>
+                      <span>{getRelationshipLabel(tribute.relationship)}</span>
+                      <span>•</span>
+                    </>
+                  )}
+                  <span>{formatDate(tribute.timestamp)}</span>
+                </div>
               </div>
             </div>
+            <p className="text-foreground text-sm whitespace-pre-wrap leading-relaxed pl-11">
+              {tribute.message}
+            </p>
           </div>
-          <p className="text-foreground whitespace-pre-wrap leading-relaxed">
-            {tribute.message}
-          </p>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 pt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-sm text-muted-foreground px-3">
+            {currentPage} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
-      ))}
+      )}
     </div>
   );
 };
