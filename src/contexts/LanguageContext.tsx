@@ -95,6 +95,8 @@ const translations: Record<string, Record<Language, string>> = {
   'tributes.messages.error': { en: 'Failed to load tributes.', zh: '加载留言失败。' },
   'tributes.messages.retry': { en: 'Try Again', zh: '重试' },
   'tributes.messages.refresh': { en: 'Refresh', zh: '刷新' },
+  'tributes.messages.sortNewest': { en: 'Newest First', zh: '最新优先' },
+  'tributes.messages.sortOldest': { en: 'Oldest First', zh: '最早优先' },
   'tributes.messages.configureHint': { en: 'Connect a Google Sheet to display tributes.', zh: '连接 Google Sheet 以显示留言。' },
   
   // Common
