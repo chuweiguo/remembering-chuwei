@@ -58,12 +58,12 @@ const Gallery = () => {
   return (
     <>
       {/* Header */}
-      <section className="py-8 md:py-12 bg-gradient-to-b from-memorial-cream to-background">
+      <section className="py-4 md:py-6 bg-gradient-to-b from-memorial-cream to-background">
         <div className="container text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 animate-fade-in-up">
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2 animate-fade-in-up">
             {t('gallery.title')}
           </h1>
-          <p className="text-lg text-muted-foreground animate-fade-in-up mb-6" style={{ animationDelay: '0.1s' }}>
+          <p className="text-base text-muted-foreground animate-fade-in-up mb-4" style={{ animationDelay: '0.1s' }}>
             {t('gallery.subtitle')}
           </p>
           <div className="flex justify-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -76,7 +76,7 @@ const Gallery = () => {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-16">
+      <section className="py-6">
         <div className="container">
           {loading && photos.length === 0 ? (
             <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
