@@ -132,6 +132,12 @@ const translations: Record<string, Record<Language, string>> = {
   'music.signInDescription': { en: 'If you can\'t hear audio, please sign in to YouTube Music in your browser.', zh: '如果您听不到音频，请在浏览器中登录 YouTube Music。' },
   'music.signIn': { en: 'Sign in', zh: '登录' },
   'music.dismiss': { en: 'Dismiss', zh: '关闭' },
+  
+  // Contact
+  'contact.title': { en: 'Contact Creator', zh: '联系创建者' },
+  'contact.description': { en: 'Having issues or suggestions? Feel free to reach out.', zh: '有问题或建议？欢迎联系我。' },
+  'contact.email': { en: 'Email', zh: '邮箱' },
+  'contact.name': { en: 'Created by a friend of Chuwei', zh: '由楚惟的朋友创建' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

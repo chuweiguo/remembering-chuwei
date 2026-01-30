@@ -1,7 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
+import { Mail, MessageCircleQuestion } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import { cn } from '@/lib/utils';
+
+const CONTACT_EMAIL = 'haokunz@outlook.com';
 
 export function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -40,7 +48,35 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <HoverCard openDelay={200}>
+            <HoverCardTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                <MessageCircleQuestion className="h-4 w-4" />
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-72" align="end">
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-semibold">{t('contact.title')}</h4>
+                  <p className="text-xs text-muted-foreground">
+                    {t('contact.name')}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {t('contact.description')}
+                </p>
+                <a 
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="flex items-center gap-2 text-sm text-primary hover:underline"
+                >
+                  <Mail className="h-4 w-4" />
+                  {CONTACT_EMAIL}
+                </a>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+          
           <Button
             variant="outline"
             size="sm"
